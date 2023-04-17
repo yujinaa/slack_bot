@@ -33,7 +33,7 @@ import com.slack.api.methods.response.chat.ChatPostMessageResponse;
 public class slackTest {
 
 	public void sendSlack() throws Exception  {
-		String channelId = "C0536F20X7T";
+		String channelId = "Ã¤³Îid";
 		String text = ":wave: Hi from a bot written in Java!";
 
 		Slack slack = Slack.getInstance();
