@@ -33,16 +33,44 @@ import com.slack.api.methods.response.chat.ChatPostMessageResponse;
 public class slackTest {
 
 	public void sendSlack() throws Exception  {
-		String channelId = "채널id";
-		String text = ":wave: Hi from a bot written in Java!";
+		//create a connection to a given URL using POST method
+		URL url = new URL("https://slack.com/api/chat.postMessage");
+		HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
-		Slack slack = Slack.getInstance();
-		String token = System.getenv("토큰값");
+		//Setting Headers
+		httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+		httpURLConnection.setRequestProperty("Authorization", "Bearer {slack Bot 토큰}");
+		httpURLConnection.setRequestMethod("POST");
 
-		ChatPostMessageResponse response = slack.methods(token).chatPostMessage(req -> req
-				.channel(channelId)
-				.text(text)
+		//Adding Request Params
+		Map<String, String> params = new HashMap<>();
+		params.put("channel", "{채널ID}");
+		params.put("text", "test text");
+		httpURLConnection.setDoOutput(true);
+		DataOutputStream out = new DataOutputStream(httpURLConnection.getOutputStream());
+		out.writeBytes(ParameterStringBuilder.getParamsString(params));
+		out.flush();
+		out.close();
+
+		//Configuring TimeOut
+		httpURLConnection.setConnectTimeout(5000);
+		httpURLConnection.setReadTimeout(5000);
+
+		//Reading the Response
+		BufferedReader in = new BufferedReader(
+				new InputStreamReader(httpURLConnection.getInputStream())
 				);
-		System.out.println("테스트");
+		String inputLine;
+		StringBuffer content = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+			content.append(inputLine);
+		}
+		in.close();
+
+		//Disconnect
+		httpURLConnection.disconnect();
+
+		//Print the content
+		System.out.println("content = " + content);
 	}
 }
