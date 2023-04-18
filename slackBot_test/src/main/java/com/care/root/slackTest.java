@@ -27,7 +27,7 @@ public class slackTest {
 	}
 
 //	private final static String webhookUrl = "https://hooks.slack.com/services/昆扰林家";
-	private static String webhookUrl = "https://hooks.slack.com/services/昆扰林家";
+	private static String webhookUrl = "https://hooks.slack.com/services/";
 
 	public static WebhookResponse send(String text) {
         try {

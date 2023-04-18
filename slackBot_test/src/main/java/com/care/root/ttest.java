@@ -2,12 +2,12 @@ package com.care.root;
 
 import com.github.seratch.jslack.Slack;
 public class ttest {
-	private static String webHookUrl ="https://hooks.slack.com/services/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";
-	private static String token = "xoxb-5076647365251-5062702719319-3q9O200Fz8ajtHAAUuOkG29M";
+	private static String webHookUrl ="https://hooks.slack.com/services/";
+	private static String token = "xoxb-";
 	private static String slackChannel = "slack-bot-test1";
 
 	public static void main(String[] args) {
-		System.out.println("test message");
+		System.out.println("slack test");
 		sendMessageSlack("메세지 보내기 된다");
 	}
 	public static void sendMessageSlack(String message) {
