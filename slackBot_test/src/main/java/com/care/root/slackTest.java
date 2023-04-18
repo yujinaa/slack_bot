@@ -1,19 +1,12 @@
 package com.care.root;
-import java.awt.List;
+
+
 import java.io.BufferedReader;
-import java.io.Console;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.security.Timestamp;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -25,52 +18,26 @@ import com.slack.api.model.Attachments;
 import com.slack.api.model.Field;
 import com.slack.api.webhook.Payload;
 import com.slack.api.webhook.WebhookResponse;
-import com.slack.api.methods.MethodsClient;
-import com.slack.api.methods.request.chat.ChatPostMessageRequest;
-import com.slack.api.methods.request.chat.ChatPostMessageRequest.ChatPostMessageRequestBuilder;
-import com.slack.api.methods.response.chat.ChatPostMessageResponse;
-
 public class slackTest {
 
-	public void sendSlack() throws Exception  {
-		//create a connection to a given URL using POST method
-		URL url = new URL("https://slack.com/api/chat.postMessage");
-		HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+	public static void main(String[] args) {
+		System.out.println("메세지 전송");
+		send("마지막 test 메세지 보내기");
 
-		//Setting Headers
-		httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-		httpURLConnection.setRequestProperty("Authorization", "Bearer {slack Bot 토큰}");
-		httpURLConnection.setRequestMethod("POST");
-
-		//Adding Request Params
-		Map<String, String> params = new HashMap<>();
-		params.put("channel", "{채널ID}");
-		params.put("text", "test text");
-		httpURLConnection.setDoOutput(true);
-		DataOutputStream out = new DataOutputStream(httpURLConnection.getOutputStream());
-		out.writeBytes(ParameterStringBuilder.getParamsString(params));
-		out.flush();
-		out.close();
-
-		//Configuring TimeOut
-		httpURLConnection.setConnectTimeout(5000);
-		httpURLConnection.setReadTimeout(5000);
-
-		//Reading the Response
-		BufferedReader in = new BufferedReader(
-				new InputStreamReader(httpURLConnection.getInputStream())
-				);
-		String inputLine;
-		StringBuffer content = new StringBuffer();
-		while ((inputLine = in.readLine()) != null) {
-			content.append(inputLine);
-		}
-		in.close();
-
-		//Disconnect
-		httpURLConnection.disconnect();
-
-		//Print the content
-		System.out.println("content = " + content);
 	}
+
+//	private final static String webhookUrl = "https://hooks.slack.com/services/웹훅주소";
+	private static String webhookUrl = "https://hooks.slack.com/services/웹훅주소";
+
+	public static WebhookResponse send(String text) {
+        try {
+            WebhookResponse response = null;
+            Slack slack = Slack.getInstance();
+            Payload payload = Payload.builder().text(text).build();
+            response = slack.send(webhookUrl, payload);
+            return response;
+        } catch (IOException e) {
+        	throw new RuntimeException(e);
+        }
+    }
 }
