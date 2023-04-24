@@ -2,7 +2,7 @@ package com.care.root;
 
 import com.github.seratch.jslack.Slack;
 public class ttest {
-	private static String webHookUrl ="https://hooks.slack.com/services/";
+	private static String webHookUrl ="";
 	private static String token = "xoxb-";
 	private static String slackChannel = "slack-bot-test1";
 
