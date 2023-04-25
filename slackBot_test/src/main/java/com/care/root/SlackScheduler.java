@@ -17,7 +17,7 @@ public class SlackScheduler {
 			MethodsClient methods = slack.methods(token);
 
 			String str = "";
-			str+="스케줄러로 특정시간에 메세지 보내기 테스트!!";
+			str+="스케줄러로 화요일 3시 5분에 자동 알림 전송";
 			ChatPostMessageRequest request = ChatPostMessageRequest.builder()
 					.channel("") 
 					.text(new Gson().toJson(str))

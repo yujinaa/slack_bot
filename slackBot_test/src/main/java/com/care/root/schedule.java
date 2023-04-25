@@ -9,7 +9,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 public class schedule {
 	private static SlackScheduler sp; //슬랙에 보낼 메세지 파일을 불러옴
-	@Scheduled(cron="*/10 * * * * *") 
+//	@Scheduled(cron="*/10 * * * * *") 
+	@Scheduled(cron="0 5 15 * * TUE") 
 	public void testSc() {
 		System.out.println("10초마다 실행");
 		sp.sendSlackPost();    //불러온 파일의 내용을 호출
